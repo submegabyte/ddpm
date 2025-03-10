@@ -7,7 +7,7 @@ import torchvision.datasets as datasets
 import matplotlib.pyplot as plt
 
 ## model
-from simple_diffusion import *
+from ddpm1 import *
 
 ## enable cuda if available
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -18,7 +18,7 @@ os.makedirs(models_dir, exist_ok=True)
 model_path = os.path.join(models_dir, f"{model_name}.pth")
 
 # Load the model from the saved file
-model = SimpleDenoiser().to(device)
+model = DDPM().to(device)
 if os.path.exists(model_path):  # Check if the file exists before loading
     model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
     model.eval()  # Set to evaluation mode
@@ -26,15 +26,20 @@ if os.path.exists(model_path):  # Check if the file exists before loading
 else:
     raise FileNotFoundError(f"Model file '{model_path}' not found!")
 
-
+## Algorithm 2
 # Sampling (reverse diffusion)
 @torch.no_grad()
 def sample():
     x = torch.randn((1, 1, 28, 28), device=device)
-    for t in reversed(range(T)):
+    for t in reversed(range(model.T)):
         z = torch.randn_like(x) if t > 0 else 0
-        noise_pred = model(x, torch.tensor([t], device=device))
-        x = (x - beta[t] * noise_pred) / torch.sqrt(alpha[t]) + torch.sqrt(beta[t]) * z
+        e_theta = model(x, torch.tensor([t], device=device))
+        # x = (x - beta[t] * e_theta) / torch.sqrt(alpha[t]) + torch.sqrt(beta[t]) * z
+        x = 1 / model.alpha[t]**0.5 * (x - (1 - model.alpha[t]) / (1 - model.alpha_bar[t])**0.5 * e_theta)\
+            + sigma[t] * z
+        
+        ## normalize
+        # x = (x - x.min()) / (x.max() - x.min() + 1e-5)
     return x
 
 # Save the generated image
