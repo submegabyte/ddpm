@@ -66,6 +66,6 @@ for epoch in range(epochs):
     ## sample every sample_period steps
     sample_period = 1
     if sample_during_training and epoch % sample_period == 0:
-        sample_and_save(model, results_dir=results_dir, n=epoch/sample_period)
+        sample_and_save(model, results_dir=results_dir, n=int(epoch/sample_period))
 
 save_model(model, models_dir)
