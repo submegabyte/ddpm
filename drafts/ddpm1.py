@@ -48,7 +48,7 @@ class DDPM(nn.Module):
 
     def __init__(self, input_channels=3):
         super(DDPM, self).__init__()
-        self.name = "ddpm"
+        self.name = os.path.splitext(os.path.basename(__file__))[0]
         self.T = 300
         self.beta = torch.linspace(1e-4, 0.02, self.T).to(device)  # Noise schedule
         self.alpha = 1 - self.beta
