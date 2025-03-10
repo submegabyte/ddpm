@@ -26,12 +26,9 @@ transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5
 train_dataset = datasets.MNIST(root="./data", train=True, transform=transform, download=True)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64*2, shuffle=True)
 
-sample_during_training = True
-
-results_dir = "results"
-if sample_during_training:
-    results_dir += datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    os.makedirs(results_dir, exist_ok=True)
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+models_dir = "models/" + timestamp
+results_dir = "results/" + timestamp
 
 ## Algorithm 1
 epochs = 5
@@ -71,4 +68,4 @@ for epoch in range(epochs):
     if sample_during_training and epoch % sample_period == 0:
         sample_and_save(model, results_dir=results_dir, n=epoch/sample_period)
 
-save_model(model)
+save_model(model, models_dir)

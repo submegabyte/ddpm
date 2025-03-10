@@ -29,9 +29,9 @@ def load_model(model_name):
     
     return model
 
-def save_model(model, ):
+def save_model(model, models_dir="models"):
     # Ensure the 'models' folder exists
-    models_dir = "models"
+    # models_dir = "models"
     os.makedirs(models_dir, exist_ok=True)
 
     # Save the model with the same name as the script
