@@ -5,9 +5,10 @@ import torch.optim as optim
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import matplotlib.pyplot as plt
+from datetime import datetime
 
-## model
 from ddpm1 import *
+from utils1 import *
 
 ## enable cuda if available
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -36,6 +37,9 @@ def sample_and_save(model, results_dir='results', n = 0):
     # plt.savefig("generated_image.png", bbox_inches="tight", pad_inches=0)  # Save image
     # plt.show()
 
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    results_dir += '/' + timestamp
+
     # Ensure the 'results' folder exists
     # results_dir = "results"
     os.makedirs(results_dir, exist_ok=True)
@@ -46,5 +50,5 @@ def sample_and_save(model, results_dir='results', n = 0):
     print(f"Image saved to {save_path}")
 
 if __name__ == "__main__":
-    model = load_model("ddpm1")
+    model = load_model("ddpm1", "models/2025-03-10_14-20-11")
     sample_and_save(model, results_dir='results', n=0)

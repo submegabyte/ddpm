@@ -46,7 +46,7 @@ def qt(x0, t, beta):
 
 class DDPM(nn.Module):
 
-    def __init__(self, input_channels=3):
+    def __init__(self, input_channels=1):
         super(DDPM, self).__init__()
         self.name = os.path.splitext(os.path.basename(__file__))[0]
         self.T = 300

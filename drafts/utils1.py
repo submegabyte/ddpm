@@ -12,9 +12,9 @@ from ddpm1 import *
 ## enable cuda if available
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def load_model(model_name):
+def load_model(model_name, models_dir="models"):
     # Ensure the 'models' folder exists
-    models_dir = "models"
+    # models_dir = "models"
     os.makedirs(models_dir, exist_ok=True)
     model_path = os.path.join(models_dir, f"{model_name}.pth")
 
