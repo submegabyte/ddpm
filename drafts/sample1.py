@@ -37,7 +37,7 @@ def sample_and_save(model, results_dir='results', n = 0):
     # plt.show()
 
     # Ensure the 'results' folder exists
-    results_dir = "results"
+    # results_dir = "results"
     os.makedirs(results_dir, exist_ok=True)
 
     # Save the generated image in the 'results' folder

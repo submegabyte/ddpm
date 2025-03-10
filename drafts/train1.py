@@ -30,6 +30,8 @@ timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 models_dir = "models/" + timestamp
 results_dir = "results/" + timestamp
 
+sample_during_training = True
+
 ## Algorithm 1
 epochs = 5
 for epoch in range(epochs):
