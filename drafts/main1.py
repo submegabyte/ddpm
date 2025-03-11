@@ -14,6 +14,7 @@ from ddpm2 import *
 
 ## enable cuda if available
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"device: {device}")
 
 model = DDPM(input_channels=1).to(device)
 model.train_MNIST()
