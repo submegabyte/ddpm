@@ -105,7 +105,7 @@ class DDPM(nn.Module):
 
     def sample_and_save(self, results_dir='results', n = 0):
         # Save the generated image
-        sampled_image = self.sample().cpu().squeeze().numpy()
+        sampled_image = self.sample().cpu().squeeze().detach().numpy()
         plt.imshow(sampled_image, cmap="gray")
         plt.axis("off")  # Remove axes for a cleaner image
         # plt.savefig("generated_image.png", bbox_inches="tight", pad_inches=0)  # Save image
