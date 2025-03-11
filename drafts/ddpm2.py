@@ -87,6 +87,7 @@ class DDPM(nn.Module):
     def next(self, x, t):
         model = self
         e_theta = model(x, torch.tensor([t], device=device))
+        z = torch.randn_like(x) if t > 0 else 0
         x = 1 / model.alpha[t]**0.5 * (x - (1 - model.alpha[t]) / (1 - model.alpha_bar[t])**0.5 * e_theta)\
                 + model.sigma[t] * z
         return x
@@ -96,7 +97,6 @@ class DDPM(nn.Module):
     def sample(self):
         x = torch.randn((1, 1, 28, 28), device=device)
         for t in reversed(range(self.T)):
-            z = torch.randn_like(x) if t > 0 else 0
             x = self.next(x, t)
 
             ## normalize
