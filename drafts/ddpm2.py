@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 from torchvision.datasets import MNIST
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 from pixelcnnpp3 import PixelCNNpp
 from utils1 import *
