@@ -16,11 +16,14 @@ from ddpm2 import *
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"device: {device}")
 
-# model1 = DDPM(input_channels=1).to(device)
-# model1.train_MNIST()
-# [model1.sample_and_save(results_dir="results/before_model_save", n=i) for i in range(5)]
-# save_model(model1, models_dir="models/after_model_save/")
+model1 = DDPM(input_channels=1).to(device)
+model1.train_MNIST()
+[model1.sample_and_save(results_dir="results/before_model_save", n=i) for i in range(5)]
+save_model(model1, models_dir="models/after_model_save/")
 
 model2 = DDPM().to(device)
 model2.load_model(models_dir="models/after_model_save/")
 [model2.sample_and_save(results_dir="results/after_model_save", n=i) for i in range(5)]
+
+model3 = model1
+[model1.sample_and_save(results_dir="results/after_model_save2", n=i) for i in range(5)]
